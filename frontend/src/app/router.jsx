@@ -7,6 +7,8 @@ import BookListPage from '../pages/BookListPage';
 import BookDetailPage from '../pages/BookDetailPage';
 import BookFormPage from '../pages/BookFormPage';
 import BookModifyPage from "../pages/BookModifyPage";
+import Login from '../pages/Login';  // 추가
+
 
 const router = createBrowserRouter([
     {
@@ -16,6 +18,7 @@ const router = createBrowserRouter([
         children: [
             { index: true, element: <Home /> },
             { path: 'about', element: <About /> },
+            { path: 'login', element: <Login /> },  // 추가
             { path: 'books', element: <BookListPage /> },
             // 1. 글쓰기 페이지 (순서 중요: :id보다 위에 있어야 함)
             { path: 'books/new', element: <BookFormPage /> },
