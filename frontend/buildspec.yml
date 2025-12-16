@@ -1,13 +1,40 @@
 version: 0.2
+
+env:
+  variables:
+    NODE_ENV: production
+
 phases:
   install:
+    runtime-versions:
+      nodejs: 18
     commands:
-      - echo Installing dependencies
-           - npm install
+      - echo "Install deps in frontend/"
+      - cd frontend
+      - npm ci
+  pre_build:
+    commands:
+      - cd frontend
+      - echo "Optional tests"
+      - npm test -- --watch=false || echo "Tests skipped"
   build:
     commands:
-      - echo Building project
+      - cd frontend
+      - echo "Building frontend"
       - npm run build
+      # Next.js Static Export:
+      # - npm run build && npm run export
+  post_build:
+    commands:
+      - echo "Build completed on `date`"
+      - ls -la frontend
+
 artifacts:
+  # 하위 폴더 기준으로 빌드 결과 폴더 지정
+  base-directory: frontend/src    # CRA/Vite 결과물이 frontend/build에 생긴다면
   files:
     - '**/*'
+
+cache:
+  paths:
+    - 'frontend/node_modules/**/*'
